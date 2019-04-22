@@ -19,7 +19,7 @@ class Dog:
         self._target_ip = ''
 
     def get_record(self):
-        """ get the domain record on ali control center """
+        """ get the domain record on ali yun control center """
         req = DescribeDomainRecordsRequest()
         req.set_DomainName(self._config.domain)
         req.set_RRKeyWord(self._config.rr)
@@ -43,7 +43,7 @@ class Dog:
         logger.debug(f'update domain response: {resp}')
 
     def get_ip_address(self):
-        """ get ip address from taobao """
+        """ get ip address from tao-bao """
         url = 'http://ip.taobao.com/service/getIpInfo.php?ip=myip'
         resp = requests.get(url)
         if resp.status_code != 200:
