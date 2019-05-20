@@ -2,7 +2,10 @@
 import logging
 import logging.config
 import os
+import re
+import time
 from datetime import datetime
+from logging.handlers import TimedRotatingFileHandler
 
 from common.paths import get_data_root
 
@@ -15,7 +18,7 @@ def new_logger(name):
     result = logging.getLogger(name)
     result.setLevel(logging.DEBUG)
     # format
-    basic_format = "%(asctime)s %(levelname)s %(filename)s(line %(lineno)s)： %(message)s"
+    basic_format = '%(asctime)s %(levelname)s File "%(pathname)s", line %(lineno)s, in %(funcName)s： %(message)s'
     date_format = '%Y-%m-%d %H:%M:%S'
     formatter = logging.Formatter(basic_format, date_format)
     # console stream
@@ -23,17 +26,19 @@ def new_logger(name):
     steam_handler.setFormatter(formatter)
     result.addHandler(steam_handler)
     # file stream
-    date_str = datetime.now().strftime('%Y-%m-%d')
-    path = os.path.join(log_root, f'{name}.{date_str}.log')
-    file_handler = logging.FileHandler(path)
+    file_name = os.path.join(log_root, name)
+    file_handler = TimedRotatingFileHandler(filename=file_name, when="D", interval=1, backupCount=30, encoding='UTF-8')
+    # file_handler = TimedRotatingFileHandler(file_name, "M", 1, 10)
+    # file_handler = logging.FileHandler(path)
     file_handler.setFormatter(formatter)
     result.addHandler(file_handler)
     return result
 
 
-logger = new_logger('controller')
+logger = new_logger('ddns')
 
 
 if __name__ == '__main__':
-    logger = new_logger('main')
-    logger.debug('hello world!')
+    for i in range(120):
+        logger.debug('hello world!')
+        time.sleep(1)
