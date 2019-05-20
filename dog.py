@@ -67,9 +67,10 @@ class Dog:
             if ip == record_ip:
                 logger.debug(f'remote record ip address has no changes: {record_ip}')
                 self._target_ip = ip
-                return
+                continue
             # update
             self.update_record(i, record_id, ip)
+            logger.debug(f'update record "{rr}" ip to: {ip}')
             self._target_ip = ip
 
     def run(self):
