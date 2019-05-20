@@ -28,7 +28,6 @@ def new_logger(name):
     # file stream
     file_name = os.path.join(log_root, name)
     file_handler = TimedRotatingFileHandler(filename=file_name, when="D", interval=1, backupCount=30, encoding='UTF-8')
-    file_handler.suffix = "%Y-%m-%d.log"
     # file_handler = TimedRotatingFileHandler(file_name, "M", 1, 10)
     # file_handler = logging.FileHandler(path)
     file_handler.setFormatter(formatter)
