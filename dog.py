@@ -18,11 +18,11 @@ class Dog:
         )
         self._target_ip = ''
 
-    def get_record(self):
+    def get_record(self, index: int):
         """ get the domain record on ali yun control center """
         req = DescribeDomainRecordsRequest()
         req.set_DomainName(self._config.domain)
-        req.set_RRKeyWord(self._config.rr)
+        req.set_RRKeyWord(self._config.rr_list[index])
         resp = self._client.do_action_with_exception(req).decode()
         dic = json.loads(resp)
         records = dic['DomainRecords']['Record']
@@ -31,10 +31,10 @@ class Dog:
         record = records[0]
         return record
 
-    def update_record(self, record_id: str, ip: str):
+    def update_record(self, index: int, record_id: str, ip: str):
         """ update domain item to target ip address """
         req = UpdateDomainRecordRequest()
-        req.set_RR(self._config.rr)
+        req.set_RR(self._config.rr_list[index])
         req.set_RecordId(record_id)
         req.set_Type('A')
         req.set_Value(ip)
@@ -60,16 +60,17 @@ class Dog:
             logger.debug(f'local ip address has no changes: {ip}')
             return
         # record
-        record = self.get_record()
-        record_id = record['RecordId']
-        record_ip = record['Value']
-        if ip == record_ip:
-            logger.debug(f'remote record ip address has no changes: {record_ip}')
+        for i, rr in enumerate(self._config.rr_list):
+            record = self.get_record(i)
+            record_id = record['RecordId']
+            record_ip = record['Value']
+            if ip == record_ip:
+                logger.debug(f'{rr} remote record ip address has no changes: {record_ip}')
+                self._target_ip = ip
+                return
+            # update
+            self.update_record(i, record_id, ip)
             self._target_ip = ip
-            return
-        # update
-        self.update_record(record_id, ip)
-        self._target_ip = ip
 
     def run(self):
         while 1:

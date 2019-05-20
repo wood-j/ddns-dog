@@ -10,7 +10,7 @@ class Config(JsonSerializable):
         self.access_key = ''
         self.access_passwd = ''
         self.domain = ''
-        self.rr = ''
+        self.rr_list = []
         if entries:
             self.__dict__.update(entries)
 
