@@ -4,7 +4,7 @@ import requests
 from aliyunsdkalidns.request.v20150109.DescribeDomainRecordsRequest import DescribeDomainRecordsRequest
 from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
 from aliyunsdkcore.client import AcsClient
-from common.logger import logger
+from common.log import logger
 from common.try_except import try_except
 from config import Config
 

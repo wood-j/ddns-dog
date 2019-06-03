@@ -2,7 +2,7 @@ import json
 import os
 
 from common.jsonn import JsonSerializable
-from common.logger import logger
+from common.log import logger
 
 
 class Config(JsonSerializable):

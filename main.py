@@ -1,4 +1,4 @@
-from common.logger import logger
+from common.log import logger
 from config import Config
 from dog import Dog
 

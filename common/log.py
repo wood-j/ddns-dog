@@ -18,7 +18,7 @@ def new_logger(name):
     result = logging.getLogger(name)
     result.setLevel(logging.DEBUG)
     # format
-    basic_format = '%(asctime)s %(levelname)s File "%(pathname)s", line %(lineno)s, in %(funcName)s： %(message)s'
+    basic_format = '%(asctime)s %(levelname)s File "%(pathname)s", line %(lineno)s： %(message)s'
     date_format = '%Y-%m-%d %H:%M:%S'
     formatter = logging.Formatter(basic_format, date_format)
     # console stream
@@ -26,7 +26,7 @@ def new_logger(name):
     steam_handler.setFormatter(formatter)
     result.addHandler(steam_handler)
     # file stream
-    file_name = os.path.join(log_root, name)
+    file_name = os.path.join(log_root, f'{name}.log')
     file_handler = TimedRotatingFileHandler(filename=file_name, when="D", interval=1, backupCount=30, encoding='UTF-8')
     # file_handler = TimedRotatingFileHandler(file_name, "M", 1, 10)
     # file_handler = logging.FileHandler(path)

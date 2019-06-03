@@ -2,7 +2,7 @@
 import functools
 import inspect
 
-from common.logger import logger
+from common.log import logger
 
 
 def try_except(text: str):
