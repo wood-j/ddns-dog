@@ -22,15 +22,18 @@ automatic generate config file if not exists, update this config file to configu
 {
     "access_key": "",
     "access_passwd": "",
-    "domain": "",
-    "rr": ""
+    "domain": "google.com",
+    "rr": [
+        "api",
+        "doc"
+    ]
 }
 ```
 
 1. access_key: access key of your ali-yun account
 2. access_passwd: access password of your ali-yun account
 3. domain: top level domain, sample: `google.com`
-4. rr: second level domain header, sample: `doc`
+4. rr: second level domains , sample: `doc`、`api`
 
 how to get access key:
 
