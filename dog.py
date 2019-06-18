@@ -1,4 +1,5 @@
 import json
+import re
 import time
 import requests
 from aliyunsdkalidns.request.v20150109.DescribeDomainRecordsRequest import DescribeDomainRecordsRequest
@@ -43,14 +44,14 @@ class Dog:
         logger.debug(f'update domain response: {resp}')
 
     def get_ip_address(self):
-        """ get ip address from tao-bao """
-        url = 'http://ip.taobao.com/service/getIpInfo.php?ip=myip'
+        """ get ip address from cip.cc """
+        url = 'http://www.cip.cc/'
         resp = requests.get(url)
-        if resp.status_code != 200:
-            raise Exception(f'get ip address error: {resp.text}')
-        dic = json.loads(resp.text)
-        ip = dic['data']['ip']
-        logger.debug(f'get current ip: {ip}')
+        assert resp.status_code == 200, f'get ip address error code {resp.status_code}: {resp.text}'
+        se = re.search(r'(?<=<pre>IP\s:\s)\d+\.\d+\.\d+\.\d+', resp.text)
+        assert se, f'no ip address found from cip.cc'
+        ip = se.group(0)
+        logger.debug(f'got current ip: {ip}')
         return ip
 
     @try_except('process')
